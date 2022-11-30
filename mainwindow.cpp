@@ -76,11 +76,13 @@
 #include "ui_statistique.h"
 #include <QIntValidator>
 #include <QValidator>
-
+#include <arduino.h>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {   Emission E ;
+  Arduino A;
+  QSqlQuery query;
 
     ui->setupUi(this);
     ui->tab_emission->setModel(E.afficher());
@@ -92,7 +94,41 @@ MainWindow::MainWindow(QWidget *parent)
     ui->lineEdit_29->setValidator(new QIntValidator(0,99999999,this));
     //ui->tab_emission->setModel(E.tri());
 
-}
+      int ret=A.connect_arduino(); // lancer la connexion à arduino
+       switch(ret){
+       case(0):qDebug()<< "arduino is available and connected to : "<< A.getarduino_port_name();
+           break;
+       case(1):qDebug() << "arduino is available but not connected to :" <<A.getarduino_port_name();
+          break;
+       case(-1):qDebug() << "arduino is not available";
+       }
+ //   QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label()));
+
+
+    qDebug() <<"aaaaa"<<A.read_from_arduino();
+    data = A.read_from_arduino();
+
+    QString message = data ;
+       if (message!="0")
+        {
+
+              /* query.prepare("INSERT INTO EMISSION (IDEMISSION,NOM_EMISSION,TEMPS,IDINVITE,jour,MESSAGE) "
+                          "VALUES (" ",' '," "," "," ",:d)");
+           query.bindValue(":message",d);*/
+           E.ajoute();
+            ui->tab_chercher->setModel(E.affichage());
+            ui->tab_tri->setModel(E.afficher());
+
+       }
+
+           else
+
+QMessageBox::information(nullptr, QObject::tr("database is open"),
+                       QObject::tr(" failed.\n"
+                                   "Click Cancel to exit."), QMessageBox::Cancel);
+
+
+   }
 
 MainWindow::~MainWindow()
 {
@@ -106,7 +142,8 @@ void MainWindow::on_pB_ajouter_clicked()
       int temps=ui->ltemps->text().toInt();
       int idinvite=ui->lidinvite->text().toInt();
       int jour=ui->ljour->text().toInt();
-   Emission E(idemission,nom_emission,temps,idinvite,jour);
+      QString message ;
+   Emission E(idemission,nom_emission,temps,idinvite,jour,message);
 
    bool test=E.ajouter();
 
@@ -170,7 +207,8 @@ void MainWindow::on_modifer_clicked()
       int temps=ui->ltemps->text().toInt();
       int idinvite=ui->lidinvite->text().toInt();
       int jour=ui->ljour->text().toInt();
-    Emission E(idemission,nom_emission,temps,idinvite,jour);
+     QString message ;
+    Emission E(idemission,nom_emission,temps,idinvite,jour,message);
     QMessageBox msgBox;
     if(E.rech(idemission))
     {
@@ -348,3 +386,35 @@ void MainWindow::on_satistique_clicked()
     statistique stat ;
     stat.exec();
 }
+
+void MainWindow::on_afficher_clicked()
+{
+ /*    arduino a ;
+     QByteArray data ;*/
+     QSqlQuery query;
+Emission E;
+QMessageBox msgBox;
+
+     QString MESSAGE ="successfully";
+     QString messagee ="failed" ;
+  //   data =a.read_from_arduino();
+   // if (data)
+    //{
+
+       query.prepare("INSERT INTO EMISSION (IDEMISSION,NOM_EMISSION,TEMPS,IDINVITE,jour,MESSAGE) "
+                      "VALUES (0,'caa',2,3,4,:MESSAGE)");
+       query.bindValue(":MESSAGE",MESSAGE);
+       ui->tab_chercher->setModel(E.affichage());
+  //}     //else
+   //  {
+
+         query.prepare("INSERT INTO EMISSION (MESSAGE) "
+                       "VALUES (:messagee)");
+        query.bindValue(":message",messagee);
+ QMessageBox::information(nullptr, QObject::tr("database is open"),
+                    QObject::tr("affichage  failed.\n"
+                                "Click Cancel to exit."), QMessageBox::Cancel);
+
+   //  }
+}
+

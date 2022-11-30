@@ -12,7 +12,7 @@ class Emission
 {
 public:
     Emission();
-    Emission(int,QString,int,int,int);
+    Emission(int,QString,int,int,int,QString);
 
     int getidemission();
     QString getnom_emission();
@@ -20,12 +20,14 @@ public:
     int gettemps();
    int getidinvite();
     int getjour();
+    QString getmessage() ;
     void setidemission(int);
     void setnom_emission(QString);
    // void setnom_animateur(QString);
     void settemps(int) ;
     void setidinvite(int) ;
     void setjour(int);
+    void setmessage(QString);
     bool ajouter();
     QSqlQueryModel* afficher();
   bool detett(int idemission );
@@ -40,6 +42,8 @@ public:
 
       int calcul_duree(int duree,QString val);
       bool rech(int idemission);
+      QSqlQueryModel* affichage();
+      bool ajoute();
 
 
 
@@ -47,6 +51,7 @@ public:
    int idemission ;
     QString nom_emission;
     int  temps,idinvite,jour ;
+    QString message;
 };
 
 #endif // EMISSION_H

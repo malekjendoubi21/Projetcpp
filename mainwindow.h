@@ -50,6 +50,7 @@
 #include <QtCharts/QCategoryAxis>
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QPieSlice>
+#include <arduino.h>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -79,9 +80,15 @@ private slots:
 
     void on_satistique_clicked();
 
+    void on_afficher_clicked();
+
+
 private:
+
     Ui::MainWindow *ui;
     Emission E;
+     Arduino A ;
+     QByteArray data;
     QMediaPlayer* player;
     QVideoWidget* vw;
   

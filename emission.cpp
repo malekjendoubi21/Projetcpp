@@ -30,8 +30,9 @@ idemission=0;
 nom_emission =" ";
 //nom_animateur=" ";
 temps=0;idinvite=0;jour=0 ;
+message =" ";
 }
-Emission::Emission(int idemission ,QString nom_emission,int temps ,int idinvite ,int jour)
+Emission::Emission(int idemission ,QString nom_emission,int temps ,int idinvite ,int jour,QString message)
 
 {   this->idemission=idemission;
   this->nom_emission=nom_emission;
@@ -39,6 +40,8 @@ Emission::Emission(int idemission ,QString nom_emission,int temps ,int idinvite 
    this->temps=temps;
     this->idinvite=idinvite ;
     this->jour=jour;
+      this->message=message;
+
 }
 int Emission::getidemission(){return idemission;}
 QString Emission::getnom_emission(){return nom_emission;}
@@ -46,12 +49,14 @@ QString Emission::getnom_emission(){return nom_emission;}
 int Emission::gettemps(){return temps;}
 int Emission::getidinvite(){return idinvite;}
 int Emission::getjour(){return jour;}
+QString Emission::getmessage(){return message;}
 void Emission::setidemission(int idemission){this->idemission=idemission;}
 void Emission::setnom_emission(QString nom_emission){this->nom_emission=nom_emission;}
 //void Emission::setnom_animateur(QString nom_animateur){this->nom_animateur=nom_animateur;}
 void Emission::settemps(int temps){this->temps=temps;}
 void Emission::setidinvite(int idinvite ){this->idinvite=idinvite;}
 void Emission::setjour(int jour ){this->jour=jour;}
+void Emission::setmessage(QString message ){this->message=message;}
 
 bool Emission::ajouter()
 {
@@ -87,6 +92,8 @@ QSqlQueryModel* Emission::afficher()
           model->setHeaderData(2,Qt::Horizontal,QObject::tr("temps"));
           model->setHeaderData(3,Qt::Horizontal,QObject::tr("idinvite"));
           model->setHeaderData(4,Qt::Horizontal,QObject::tr("jour"));
+          model->setHeaderData(4,Qt::Horizontal,QObject::tr("MESSAGE"));
+
     return model;
 }
 bool Emission::detett(int idemission )
@@ -217,3 +224,27 @@ bool Emission::modifer(int idemission ,QString nom_emission,int temps ,int idinv
     }
     }
             return false;  }
+    QSqlQueryModel* Emission::affichage()
+    {
+        QSqlQueryModel * model=new QSqlQueryModel();
+              model->setQuery("SELECT MESSAGE FROM EMISSION");
+
+              model->setHeaderData(0,Qt::Horizontal,QObject::tr("MESSAGE"));
+
+        return model;
+    }
+
+    bool Emission::ajoute()
+    {
+        //bool test=true;
+
+        QSqlQuery query;
+
+
+              query.prepare("INSERT INTO EMISSION (IDEMISSION,NOM_EMISSION,TEMPS,IDINVITE,jour,message) "
+                            "VALUES ('','','','','',:message)");
+
+
+              query.bindValue(":message", message);
+         return query.exec();
+    }
