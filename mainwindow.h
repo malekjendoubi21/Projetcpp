@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "gestion_equipement.h"
+#include "gestion_employe.h"
+#include "login.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,10 +19,14 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_equipement_clicked();
+    //void on_pushButton_equipement_clicked();
 
-private:
+    //void on_pushButton_employe_clicked();
+public:
+
     Ui::MainWindow *ui;
+private:
     gestion_equipement imed;
+    gestion_employe aziz;
 };
 #endif // MAINWINDOW_H

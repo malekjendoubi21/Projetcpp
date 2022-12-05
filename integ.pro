@@ -19,23 +19,33 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     arduino.cpp \
     connexion.cpp \
+    employe.cpp \
     equipement.cpp \
+    gestion_employe.cpp \
     gestion_equipement.cpp \
     main.cpp \
     mainwindow.cpp \
-    notification.cpp
+    menu.cpp \
+    notification.cpp \
+    qrcode.cpp
 
 HEADERS += \
     arduino.h \
     connexion.h \
+    employe.h \
     equipement.h \
+    gestion_employe.h \
     gestion_equipement.h \
     mainwindow.h \
-    notification.h
+    menu.h \
+    notification.h \
+    qrcode.h
 
 FORMS += \
+    gestion_employe.ui \
     gestion_equipement.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    menu.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -15,11 +15,19 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
+/*
 void MainWindow::on_pushButton_equipement_clicked()
 {
 
     QMessageBox::information(nullptr, QObject::tr("Gestion Equipement"),
-                                    QObject::tr("Welcom Imed."), QMessageBox::Ok);
+                                    QObject::tr("Welcome Imed."), QMessageBox::Ok);
      imed.show();
 }
+
+void MainWindow::on_pushButton_employe_clicked()
+{
+    QMessageBox::information(nullptr, QObject::tr("Gestion Employe"),
+                                    QObject::tr("Welcome Aziz."), QMessageBox::Ok);
+     aziz.show();
+}
+*/
