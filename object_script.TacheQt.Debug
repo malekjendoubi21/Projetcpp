@@ -1,0 +1,16 @@
+INPUT(
+./debug\arduino.o
+./debug\connexion.o
+./debug\dialog_mailing.o
+./debug\dialog_stats.o
+./debug\invite.o
+./debug\main.o
+./debug\mainwindow.o
+./debug\qcustomplot.o
+./debug\smtp.o
+./debug\moc_dialog_mailing.o
+./debug\moc_dialog_stats.o
+./debug\moc_mainwindow.o
+./debug\moc_qcustomplot.o
+./debug\moc_smtp.o
+);
